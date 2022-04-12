@@ -1,0 +1,137 @@
+<form [formGroup]="addform">
+<nav class="navbar">
+    <div id="navbar2">
+      <h3>User: {{selecteduser?.firstname}} {{selecteduser?.lastname}}</h3> 
+      <label>Firstname</label>
+      <input type="text" formControlName="firstname"  name="firstname"   placeholder="Firstname">
+      <label>Lastname</label>
+      <input type="text" formControlName="lastname"  name="lastname"   placeholder="Lastname">
+  </div> 
+    <button [disabled]="addform.invalid" type="submit" class="btn btn-success" (click)="savechanges()" >Save </button>
+</nav>
+</form>
+<div>
+  <table class="table table-striped" id="table"  >
+    <thead>
+      <tr>
+        <th  scope="col">Nr</th>
+        <th  scope="col">Type</th>
+        <th  scope="col">Number</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let info of selecteduser?.phonebook;let indexOfelement=index; " >
+        <th scope="row">{{indexOfelement+1}}</th>
+        <td>{{info.type}}</td>
+        <td>+{{info.number}}</td>
+        <td id="buttonrow"><span id="doublebuttons"><button  (click)="openupdateform(indexOfelement)" data-toggle="modal" data-target="#updateUser" class="btn btn-success">Edit</button> <button  (click)="onDeleteModal(indexOfelement)" data-toggle="modal" data-target="#deleteUser" class="btn btn-danger">Delete</button></span></td>
+      </tr>
+    </tbody>
+  </table>
+  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addUser" (click)="openForm()">Add new Phone number</button>
+</div>
+
+
+  <!-- Delete Modal -->
+  <div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="deleteModelLabel">Delete Phone</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <p>Are you sure you want to delete this number ?</p>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button  (click)="onDeletePhone(indexfordelte)"  class="btn btn-danger" data-dismiss="modal">Yes</button>
+             </div>
+          </div>
+       </div>
+    </div>
+  </div>
+
+
+ <!-- Add Phone Update -->
+ <div class="modal fade" id="updateUser" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title">Update Phone</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <form [formGroup]="phoneaddform">
+            <div >
+             <label for="phone">Type</label>
+            <div>
+              <input class="form-check-input" type="radio" formControlName="type" value ="Home"  name="type" id="flexRadioDefault1" >
+              <label class="form-check-label" for="flexRadioDefault1"> Home </label>
+            </div>
+            <div>
+              <input class="form-check-input" type="radio" formControlName="type" value ="Work"  name="type" id="flexRadioDefault2">
+              <label class="form-check-label" for="flexRadioDefault2">Work</label>
+            </div>
+            <div>
+              <input class="form-check-input" type="radio" formControlName="type"  value ="Cellphone"  name="type" id="flexRadioDefault3">
+              <label class="form-check-label" for="flexRadioDefault3">Cellphone</label>
+            </div>      
+             <label for="phone">Phone</label>
+             <input type="text"  name="number" formControlName="number" class="form-control" id="phone" placeholder="Phone Number" required>
+          <div class="modal-footer">
+             <button type="button" id="close_add_form_1" class="btn btn-secondary" data-dismiss="modal">Close</button>
+             <button  [disabled]="phoneaddform.invalid" type="submit" class="btn btn-primary"(click)="onUpdatePhone(indexforupdate)" >Update Phone</button>
+          </div>
+        </div>
+          </form>
+       </div>
+    </div>
+  </div>
+  </div>
+
+
+
+
+
+  <!-- Add Phone Modal -->
+  <div class="modal fade" id="addUser" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title">Add Phone</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form [formGroup]="phoneaddform">
+              <div >
+               <label for="phone">Type</label>
+              <div>
+                <input class="form-check-input" type="radio" formControlName="type" value ="Home"  name="type" id="flexRadioDefault1" >
+                <label class="form-check-label" for="flexRadioDefault1"> Home </label>
+              </div>
+              <div>
+                <input class="form-check-input" type="radio" formControlName="type" value ="Work"  name="type" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">Work</label>
+              </div>
+              <div>
+                <input class="form-check-input" type="radio" formControlName="type"  value ="Cellphone"  name="type" id="flexRadioDefault3">
+                <label class="form-check-label" for="flexRadioDefault3">Cellphone</label>
+              </div>      
+               <label for="phone">Phone</label>
+               <input type="text"  name="number" formControlName="number" class="form-control" id="phone" placeholder="Phone Number" required>
+            <div class="modal-footer">
+               <button type="button" id="close_add_form_2" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button  [disabled]="phoneaddform.invalid" type="submit" class="btn btn-primary"(click)="onAddPhone()" >Add Phone</button>
+            </div>
+          </div>
+            </form>
+         </div>
+      </div>
+    </div>
+    </div>

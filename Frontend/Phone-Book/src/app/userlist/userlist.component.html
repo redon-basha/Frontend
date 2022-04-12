@@ -1,0 +1,88 @@
+
+<nav class="navbar">
+    <h3>PhoneBook</h3>  
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addUser" (click)="onAddModal()">Add User</button>
+  </nav>
+  
+  <div id="main_div">
+    
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th  class="clickable" scope="col"><a (click)="onHeaderClick('')">Nr</a></th>
+          <th  class="clickable" scope="col"><a (click)="onHeaderClick('firstname')">Firstname</a></th>
+          <th  class="clickable" scope="col"><a (click)="onHeaderClick('lastname')">Lastname</a></th>
+          <th  class="clickable" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr  class="clickable"   *ngFor="let x of users;let indexOfelement=index; " (click)="onrowclick(x.id,$event)">
+          <th scope="row">{{indexOfelement+1}}</th>
+          <td>{{ x.firstname }}</td>
+          <td>{{ x.lastname }}</td>
+          <td><button  type="button"(click)="onDeleteModal(x,$event)" class="btn btn-danger">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  
+  
+  <!-- Add User Modal -->
+  <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="addEmployeeModalLabel">Add User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form  [formGroup]="addform" (ngSubmit)="onAddUser()">
+            <div class="form-group">
+               <label >Firstname</label>
+               <input type="text" formControlName="firstname"  name="firstname" class="form-control" id="firstname" placeholder="Firstname" required>
+               <span *ngIf="!addform.get('firstname')?.valid && addform.get('firstname')?.touched" class="help-block">Please enter a valid firstname</span>
+            </div>
+            <div class="form-group">
+               <label >Lastname</label>
+               <input type="email"  formControlName="lastname" name="lastname" class="form-control" id="lastname" placeholder="Lastname" required>
+               <span *ngIf="!addform.get('lastname')?.valid && addform.get('lastname')?.touched" class="help-block">Please enter a valid lastname</span>
+            </div>
+            <div formArrayName="phonebook" >
+              <div class="form-group" *ngFor="let variable of getControls(); let i = index">
+                <div formGroupName="{{i}}">
+               <label for="phone">Type</label>
+              <div>
+                <input class="form-check-input" type="radio"  value ="Home" formControlName="type" name="type" id="flexRadioDefault1" >
+                <label class="form-check-label" for="flexRadioDefault1"> Home </label>
+              </div>
+              <div>
+                <input class="form-check-input" type="radio" value ="Work" formControlName="type" name="type" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">Work</label>
+              </div>
+              <div>
+                <input class="form-check-input" type="radio"   value ="Cellphone" formControlName="type" name="type" id="flexRadioDefault3">
+                <label class="form-check-label" for="flexRadioDefault3">Cellphone</label>
+              </div>      
+               <label for="phone">Phone</label>
+               <input type="text"  name="number" formControlName="number" class="form-control" id="phone" placeholder="Phone Number" required>
+               <span *ngIf="!addform.get(['phonebook', i, 'number'])?.valid && addform.get(['phonebook', i, 'number'])?.touched" class="help-block">Please enter a valid phone number</span>
+              </div>
+          </div>
+        </div>
+            <div class="modal-footer">
+               <button type="button" id="close_add_form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button [disabled]="addform.invalid" type="submit" class="btn btn-primary" >Add User</button>
+            </div>
+            </form>
+         </div>
+      </div>
+    </div>
+    </div>
+  
+  
+  
+  

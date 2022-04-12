@@ -1,0 +1,36 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+
+.navbar {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background:#222;
+    color: #f2f2f2;
+}
+
+input.ng-invalid.ng-touched{
+    border: 1px solid red;
+}
+
+.clickable {
+    cursor: pointer;
+  }
+
+
+
+
+
+
+
+table tbody tr:hover {
+    border-bottom: 1px solid  #070707;
+
+}
+
+
+
+
